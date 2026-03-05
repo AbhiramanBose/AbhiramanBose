@@ -21,7 +21,7 @@
   <img src="https://img.shields.io/badge/GitHub_Copilot-black?style=plastic&logo=githubcopilot&logoSize=auto" alt="GitHub Copilot">
   <img src="https://img.shields.io/badge/IntelliJ_IDEA-black?style=plastic&logo=intellijidea&logoSize=auto" alt="IntelliJ IDEA">
   <img alt="Static Badge" src="https://img.shields.io/badge/Postman-black?style=plastic&logo=postman">
-  <img src="https://img.shields.io/badge/Visual%20Studio%20Code-black?style=plastic&logo=visualstudiocode&logoColor=white&logoSize=auto" alt="Visual Studio Code">
+  <img alt="Static Badge" src="https://tinyurl.com/cd4bm6dt" >
   <img src="https://img.shields.io/badge/MySQL-black?style=plastic&logo=mysql&logoSize=auto" alt="MySQL">
   <img src="https://img.shields.io/badge/Hibernate-black?style=plastic&logo=hibernate&logoSize=auto" alt="Hibernate">
   <img alt="Static Badge" src="https://img.shields.io/badge/Homebrew-black?style=plastic&logo=homebrew&logoSize=auto">
