@@ -37,9 +37,7 @@
   <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=AbhiramanBose&theme=tokyonight" height="160" alt="GitHub stats" />
 </p>
 
-<p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=AbhiramanBose&theme=tokyonight" height="170" alt="Top languages" />
-</p>
+
 
 
 ---
