@@ -76,3 +76,11 @@ Last stats refresh: <!--STATS_REFRESH-->loading...<!--/STATS_REFRESH-->
 
 
 
+
+
+---
+
+### 🕒 Live Time
+
+Current UTC Time: <!--UTC_TIME-->2026-03-05 21:51 UTC<!--/UTC_TIME-->  
+Current IST Time: <!--IST_TIME-->2026-03-06 03:21 IST<!--/IST_TIME-->
