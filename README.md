@@ -73,3 +73,11 @@
   <img alt="Visitors" src="https://visitor-badge.laobi.icu/badge?page_id=AbhiramanBose&color=blue"/>
   <img src="https://komarev.com/ghpvc/?username=AbhiramanBose&label=Profile%20views&color=0e75b6&style=flat" alt="profile views"/>
 </p>
+
+
+---
+
+### 🕒 Live Time
+
+Current UTC Time: <!--UTC_TIME-->2026-03-05 21:29 UTC<!--/UTC_TIME-->  
+Current IST Time: <!--IST_TIME-->2026-03-06 02:59 IST<!--/IST_TIME-->
