@@ -15,27 +15,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Update README UTC time
+      - name: Update README UTC + IST time
         run: |
           python - <<'PY'
-          from datetime import datetime, timezone
+          from datetime import datetime, timezone, timedelta
           from pathlib import Path
 
           readme = Path("README.md")
           text = readme.read_text(encoding="utf-8")
 
-          start = "<!--UTC_TIME-->"
-          end = "<!--/UTC_TIME-->"
-          i = text.find(start)
-          j = text.find(end)
+          def replace_marker(src, start, end, value):
+              i = src.find(start)
+              j = src.find(end)
+              if i == -1 or j == -1 or j <= i:
+                  raise SystemExit(f"Marker not found: {start} ... {end}")
+              return src[: i + len(start)] + value + src[j:]
 
-          if i == -1 or j == -1 or j <= i:
-              raise SystemExit("Markers not found. Add: <!--UTC_TIME-->loading...<!--/UTC_TIME-->")
+          now_utc = datetime.now(timezone.utc)
+          now_ist = now_utc.astimezone(timezone(timedelta(hours=5, minutes=30)))
 
-          now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-          updated = text[: i + len(start)] + now + text[j:]
-          readme.write_text(updated, encoding="utf-8")
-          print("Updated UTC time:", now)
+          utc_value = now_utc.strftime("%Y-%m-%d %H:%M UTC")
+          ist_value = now_ist.strftime("%Y-%m-%d %H:%M IST")
+
+          text = replace_marker(text, "<!--UTC_TIME-->", "<!--/UTC_TIME-->", utc_value)
+          text = replace_marker(text, "<!--IST_TIME-->", "<!--/IST_TIME-->", ist_value)
+
+          readme.write_text(text, encoding="utf-8")
+          print("Updated:", utc_value, "|", ist_value)
           PY
 
       - name: Commit and push if changed
@@ -43,5 +49,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git diff --staged --quiet || git commit -m "chore: update UTC time"
+          git diff --staged --quiet || git commit -m "chore: update UTC and IST time"
           git push
