@@ -9,9 +9,13 @@
 ### 🕒 Live Time
 
 <p align="center">
-  <img src="https://img.shields.io/badge/UTC-<!--UTC_TIME-->2026-03-05 21:23 UTC<!--/UTC_TIME-->-black?style=plastic" alt="UTC Time" />
+  <!--UTC_BADGE_START-->
+  <img src="https://img.shields.io/badge/UTC-2026--03--05_21--23_UTC-black?style=plastic" alt="UTC Time" />
+  <!--UTC_BADGE_END-->
   &nbsp;
-  <img src="https://img.shields.io/badge/IST-<!--IST_TIME-->2026-03-06 02:53 IST<!--/IST_TIME-->-black?style=plastic" alt="IST Time" />
+  <!--IST_BADGE_START-->
+  <img src="https://img.shields.io/badge/IST-2026--03--06_02--53_IST-black?style=plastic" alt="IST Time" />
+  <!--IST_BADGE_END-->
 </p>
 
 ---
