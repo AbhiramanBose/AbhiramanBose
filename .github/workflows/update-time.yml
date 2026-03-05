@@ -1,4 +1,4 @@
-name: Update UTC Time
+name: update-time
 
 on:
   schedule:
@@ -15,36 +15,38 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Update README UTC + IST time
+      - name: Update README UTC + IST
         run: |
           python - <<'PY'
           from datetime import datetime, timezone, timedelta
           from pathlib import Path
 
-          readme = Path("README.md")
-          text = readme.read_text(encoding="utf-8")
+          p = Path("README.md")
+          text = p.read_text(encoding="utf-8")
 
-          def replace_marker(src, start, end, value):
-              i = src.find(start)
-              j = src.find(end)
-              if i == -1 or j == -1 or j <= i:
-                  raise SystemExit(f"Marker not found: {start} ... {end}")
-              return src[: i + len(start)] + value + src[j:]
+          utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          ist = datetime.now(timezone.utc).astimezone(
+              timezone(timedelta(hours=5, minutes=30))
+          ).strftime("%Y-%m-%d %H:%M IST")
 
-          now_utc = datetime.now(timezone.utc)
-          now_ist = now_utc.astimezone(timezone(timedelta(hours=5, minutes=30)))
+          block = (
+              "### 🕒 Live Time\n\n"
+              f"Current UTC Time: <!--UTC_TIME-->{utc}<!--/UTC_TIME-->  \n"
+              f"Current IST Time: <!--IST_TIME-->{ist}<!--/IST_TIME-->\n"
+          )
 
-          utc_value = now_utc.strftime("%Y-%m-%d %H:%M UTC")
-          ist_value = now_ist.strftime("%Y-%m-%d %H:%M IST")
+          if "<!--UTC_TIME-->" in text and "<!--/UTC_TIME-->" in text and "<!--IST_TIME-->" in text and "<!--/IST_TIME-->" in text:
+              import re
+              text = re.sub(r"<!--UTC_TIME-->.*?<!--/UTC_TIME-->", f"<!--UTC_TIME-->{utc}<!--/UTC_TIME-->", text, flags=re.S)
+              text = re.sub(r"<!--IST_TIME-->.*?<!--/IST_TIME-->", f"<!--IST_TIME-->{ist}<!--/IST_TIME-->", text, flags=re.S)
+          else:
+              text += "\n\n---\n\n" + block
 
-          text = replace_marker(text, "<!--UTC_TIME-->", "<!--/UTC_TIME-->", utc_value)
-          text = replace_marker(text, "<!--IST_TIME-->", "<!--/IST_TIME-->", ist_value)
-
-          readme.write_text(text, encoding="utf-8")
-          print("Updated:", utc_value, "|", ist_value)
+          p.write_text(text, encoding="utf-8")
+          print("Updated:", utc, "|", ist)
           PY
 
-      - name: Commit and push if changed
+      - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
