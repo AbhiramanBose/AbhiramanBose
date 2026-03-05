@@ -46,12 +46,12 @@
 ### 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=AbhiramanBose&theme=tokyonight&hide_border=true" height="160" alt="GitHub streak" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=AbhiramanBose&theme=tokyonight" height="160" alt="GitHub stats" />
+  <img src="https://streak-stats.demolab.com?user=AbhiramanBose&theme=tokyonight&hide_border=true&cache_seconds=86400" height="160" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=AbhiramanBose&theme=tokyonight" height="160" />
 </p>
 
 
-
+Last stats refresh: <!--STATS_REFRESH-->loading...<!--/STATS_REFRESH-->
 
 ---
 
@@ -75,9 +75,4 @@
 </p>
 
 
----
 
-### 🕒 Live Time
-
-Current UTC Time: <!--UTC_TIME-->2026-03-05 21:33 UTC<!--/UTC_TIME-->  
-Current IST Time: <!--IST_TIME-->2026-03-06 03:03 IST<!--/IST_TIME-->
