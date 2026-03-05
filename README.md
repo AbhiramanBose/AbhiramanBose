@@ -51,7 +51,7 @@
 </p>
 
 <p align="center">
-Last stats refresh: <!--STATS_REFRESH-->loading...<!--/STATS_REFRESH-->
+Last stats refresh: <!--STATS_REFRESH-->2026-03-05 22:15 UTC<!--/STATS_REFRESH-->
 </p>
 
 ---
