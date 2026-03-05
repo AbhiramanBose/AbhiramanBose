@@ -12,38 +12,28 @@ jobs:
   update-time:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Update README UTC + IST
+      - name: Update UTC + IST markers
         run: |
           python - <<'PY'
           from datetime import datetime, timezone, timedelta
           from pathlib import Path
+          import re
 
           p = Path("README.md")
           text = p.read_text(encoding="utf-8")
 
-          utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-          ist = datetime.now(timezone.utc).astimezone(
-              timezone(timedelta(hours=5, minutes=30))
-          ).strftime("%Y-%m-%d %H:%M IST")
+          now_utc = datetime.now(timezone.utc)
+          now_ist = now_utc.astimezone(timezone(timedelta(hours=5, minutes=30)))
 
-          block = (
-              "### 🕒 Live Time\n\n"
-              f"Current UTC Time: <!--UTC_TIME-->{utc}<!--/UTC_TIME-->  \n"
-              f"Current IST Time: <!--IST_TIME-->{ist}<!--/IST_TIME-->\n"
-          )
+          utc = now_utc.strftime("%Y-%m-%d %H:%M UTC")
+          ist = now_ist.strftime("%Y-%m-%d %H:%M IST")
 
-          if "<!--UTC_TIME-->" in text and "<!--/UTC_TIME-->" in text and "<!--IST_TIME-->" in text and "<!--/IST_TIME-->" in text:
-              import re
-              text = re.sub(r"<!--UTC_TIME-->.*?<!--/UTC_TIME-->", f"<!--UTC_TIME-->{utc}<!--/UTC_TIME-->", text, flags=re.S)
-              text = re.sub(r"<!--IST_TIME-->.*?<!--/IST_TIME-->", f"<!--IST_TIME-->{ist}<!--/IST_TIME-->", text, flags=re.S)
-          else:
-              text += "\n\n---\n\n" + block
+          text = re.sub(r"<!--UTC_TIME-->.*?<!--/UTC_TIME-->", f"<!--UTC_TIME-->{utc}<!--/UTC_TIME-->", text, flags=re.S)
+          text = re.sub(r"<!--IST_TIME-->.*?<!--/IST_TIME-->", f"<!--IST_TIME-->{ist}<!--/IST_TIME-->", text, flags=re.S)
 
           p.write_text(text, encoding="utf-8")
-          print("Updated:", utc, "|", ist)
           PY
 
       - name: Commit and push
