@@ -7,7 +7,7 @@
 </p>
 
 ---
-
+🕒 Current UTC Time: <!--UTC_TIME-->loading...<!--/UTC_TIME-->
 ### 🛠️ Tech Stack
 
 <p align="center">
