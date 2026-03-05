@@ -5,8 +5,14 @@
   I enjoy working with Java, Spring Boot, and web technologies to create
   meaningful applications.
 </p>
-🕒 Current UTC Time: <!--UTC_TIME-->2026-03-05 21:18 UTC<!--/UTC_TIME-->  
-🕒 Current IST Time: <!--IST_TIME-->2026-03-06 02:48 IST<!--/IST_TIME-->
+
+### 🕒 Live Time
+
+<p align="center">
+  <img src="https://img.shields.io/badge/UTC-<!--UTC_TIME-->loading...<!--/UTC_TIME-->-black?style=plastic" alt="UTC Time" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/IST-<!--IST_TIME-->loading...<!--/IST_TIME-->-black?style=plastic" alt="IST Time" />
+</p>
 
 ---
 ### 🛠️ Tech Stack
