@@ -10,11 +10,11 @@
 
 <p align="center">
   <!--UTC_BADGE_START-->
-  <img src="https://img.shields.io/badge/UTC-2026--03--05_21--23-black?style=plastic" alt="UTC Time" />
+  <img src="https://img.shields.io/badge/UTC-2026--03--05_21--23_UTC-black?style=plastic" alt="UTC Time" />
   <!--UTC_BADGE_END-->
   &nbsp;
   <!--IST_BADGE_START-->
-  <img src="https://img.shields.io/badge/IST-2026--03--06_02--53-black?style=plastic" alt="IST Time" />
+  <img src="https://img.shields.io/badge/IST-2026--03--06_02--53_IST-black?style=plastic" alt="IST Time" />
   <!--IST_BADGE_END-->
 </p>
 
@@ -24,10 +24,10 @@
 <p align="center">
   <img alt="java" src="https://img.shields.io/badge/Java-black?logo=openjdk&style=plastic" />
   <img alt="spring" src="https://img.shields.io/badge/Spring-black?logo=spring&style=plastic" />
-  <img alt="spring-boot" src="https://img.shields.io/badge/Spring_Boot-black?style=plastic&logo=springboot"/>
+  <img alt="spring-boot" src="https://img.shields.io/badge/Spring%20Boot-black?style=plastic&logo=springboot"/>
   <img alt="html5" src="https://img.shields.io/badge/HTML5-black?logo=html5&style=plastic" />
   <img alt="CSS" src="https://tinyurl.com/85edy2py" />
-  <img alt="javascript" src="https://img.shields.io/badge/Javascript-black?logo=javascript&style=plastic" />
+  <img alt="javascript" src="https://img.shields.io/badge/JavaScript-black?logo=javascript&style=plastic" />
   <img alt="git" src="https://img.shields.io/badge/Git-black?logo=git&style=plastic" />
   <img src="https://img.shields.io/badge/GitHub_Copilot-black?style=plastic&logo=githubcopilot&logoSize=auto" alt="GitHub Copilot">
   <img src="https://img.shields.io/badge/IntelliJ_IDEA-black?style=plastic&logo=intellijidea&logoSize=auto" alt="IntelliJ IDEA">
@@ -46,12 +46,13 @@
 ### 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=AbhiramanBose&theme=tokyonight&hide_border=true&cache_seconds=86400" height="160" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=AbhiramanBose&theme=tokyonight" height="160" />
+  <img src="https://streak-stats.demolab.com?user=AbhiramanBose&theme=tokyonight&hide_border=true&cache_seconds=86400" height="160" alt="Github Stats"/>
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=AbhiramanBose&theme=tokyonight" height="160" alt="Github Card Stats"/>
 </p>
 
-
+<p align="center">
 Last stats refresh: <!--STATS_REFRESH-->loading...<!--/STATS_REFRESH-->
+</p>
 
 ---
 
@@ -75,12 +76,3 @@ Last stats refresh: <!--STATS_REFRESH-->loading...<!--/STATS_REFRESH-->
 </p>
 
 
-
-
-
----
-
-### 🕒 Live Time
-
-Current UTC Time: <!--UTC_TIME-->2026-03-05 21:51 UTC<!--/UTC_TIME-->  
-Current IST Time: <!--IST_TIME-->2026-03-06 03:21 IST<!--/IST_TIME-->
