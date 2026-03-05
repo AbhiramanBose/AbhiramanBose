@@ -2,24 +2,43 @@ name: Update UTC Time
 
 on:
   schedule:
-    - cron: "*/15 * * * *"   # every 15 minutes
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  update:
+  update-time:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Update README time
+      - name: Update README UTC time
         run: |
-          NOW="$(date -u '+%Y-%m-%d %H:%M UTC')"
-          sed -i "s|<!--UTC_TIME-->.*<!--/UTC_TIME-->|<!--UTC_TIME-->$NOW<!--/UTC_TIME-->|" README.md
+          python - <<'PY'
+          from datetime import datetime, timezone
+          from pathlib import Path
 
-      - name: Commit changes
+          readme = Path("README.md")
+          text = readme.read_text(encoding="utf-8")
+
+          start = "<!--UTC_TIME-->"
+          end = "<!--/UTC_TIME-->"
+          i = text.find(start)
+          j = text.find(end)
+
+          if i == -1 or j == -1 or j <= i:
+              raise SystemExit("Markers not found. Add: <!--UTC_TIME-->loading...<!--/UTC_TIME-->")
+
+          now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          updated = text[: i + len(start)] + now + text[j:]
+          readme.write_text(updated, encoding="utf-8")
+          print("Updated UTC time:", now)
+          PY
+
+      - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
