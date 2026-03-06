@@ -16,50 +16,97 @@ jobs:
   update-readme:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Debug trigger info
+      - name: Debug trigger context
         run: |
-          echo "event=${{ github.event_name }}"
-          date -u
+          echo "event_name=${{ github.event_name }}"
+          echo "ref=${{ github.ref }}"
+          echo "sha=${{ github.sha }}"
+          date -u +"runner_utc=%Y-%m-%d %H:%M:%S UTC"
 
-      - name: Update UTC/IST badges + stats refresh
+      - name: Update UTC/IST badges + stats refresh (with diagnostics)
         run: |
           python - <<'PY'
           from datetime import datetime, timezone, timedelta
           from pathlib import Path
           import re
+          import hashlib
 
           p = Path("README.md")
-          text = p.read_text(encoding="utf-8")
+          if not p.exists():
+              raise SystemExit("README.md not found")
+
+          old = p.read_text(encoding="utf-8")
+          old_hash = hashlib.sha256(old.encode("utf-8")).hexdigest()
 
           now_utc = datetime.now(timezone.utc)
           now_ist = now_utc.astimezone(timezone(timedelta(hours=5, minutes=30)))
 
-          utc_badge = now_utc.strftime("%Y--%m--%d_%H--%M_UTC")
-          ist_badge = now_ist.strftime("%Y--%m--%d_%H--%M_IST")
-          refresh = now_utc.strftime("%Y-%m-%d %H:%M UTC")
+          # Keep seconds so each scheduled run creates a deterministic diff.
+          utc_badge = now_utc.strftime("%Y--%m--%d_%H--%M--%S_UTC")
+          ist_badge = now_ist.strftime("%Y--%m--%d_%H--%M--%S_IST")
+          refresh = now_utc.strftime("%Y-%m-%d %H:%M:%S UTC")
 
           utc_img = f'<img src="https://img.shields.io/badge/UTC-{utc_badge}-black?style=plastic" alt="UTC Time" />'
           ist_img = f'<img src="https://img.shields.io/badge/IST-{ist_badge}-black?style=plastic" alt="IST Time" />'
 
-          text = re.sub(r"(<!--UTC_BADGE_START-->)(.*?)(<!--UTC_BADGE_END-->)", rf"\1\n  {utc_img}\n  \3", text, flags=re.S)
-          text = re.sub(r"(<!--IST_BADGE_START-->)(.*?)(<!--IST_BADGE_END-->)", rf"\1\n  {ist_img}\n  \3", text, flags=re.S)
-          text = re.sub(r"<!--STATS_REFRESH-->.*?<!--/STATS_REFRESH-->", f"<!--STATS_REFRESH-->{refresh}<!--/STATS_REFRESH-->", text, flags=re.S)
+          text, c1 = re.subn(
+              r"(<!--UTC_BADGE_START-->)(.*?)(<!--UTC_BADGE_END-->)",
+              rf"\1\n  {utc_img}\n  \3",
+              old,
+              flags=re.S,
+          )
+          text, c2 = re.subn(
+              r"(<!--IST_BADGE_START-->)(.*?)(<!--IST_BADGE_END-->)",
+              rf"\1\n  {ist_img}\n  \3",
+              text,
+              flags=re.S,
+          )
+          text, c3 = re.subn(
+              r"<!--STATS_REFRESH-->.*?<!--/STATS_REFRESH-->",
+              f"<!--STATS_REFRESH-->{refresh}<!--/STATS_REFRESH-->",
+              text,
+              flags=re.S,
+          )
+
+          print(f"utc_marker_matches={c1}")
+          print(f"ist_marker_matches={c2}")
+          print(f"stats_marker_matches={c3}")
+          print(f"new_utc_badge={utc_badge}")
+          print(f"new_ist_badge={ist_badge}")
+          print(f"new_refresh={refresh}")
+
+          if c1 == 0 or c2 == 0 or c3 == 0:
+              raise SystemExit("One or more README markers were not found. Check marker comments in README.md.")
 
           p.write_text(text, encoding="utf-8")
+
+          new_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
+          print(f"readme_changed={old_hash != new_hash}")
           PY
+
+      - name: Show README marker lines after update
+        run: |
+          grep -n "UTC_BADGE_START\|UTC_BADGE_END\|IST_BADGE_START\|IST_BADGE_END\|STATS_REFRESH" README.md || true
 
       - name: Commit and push
         run: |
+          git status --short
           if git diff --quiet; then
             echo "No changes to commit."
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add README.md
           git commit -m "chore: update README UTC/IST badges and refresh time"
+
+          # Protect against occasional race conditions.
           git pull --rebase
           git push
