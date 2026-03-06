@@ -71,7 +71,7 @@ Last stats refresh: <!--STATS_REFRESH-->2026-03-06 08:06:42 UTC<!--/STATS_REFRES
 ---
 
 <p align="center">
-  <img alt="Visitors" src="https://visitor-badge.laobi.icu/badge?page_id=AbhiramanBose&color=blue"/>
+  <img alt="Visitors" src="https://visitor-badge.laobi.icu/badge?page_id=AbhiramanBose.AbhiramanBose&color=blue"/>
   <img src="https://komarev.com/ghpvc/?username=AbhiramanBose&label=Profile%20views&color=0e75b6&style=flat" alt="profile views"/>
 </p>
 
