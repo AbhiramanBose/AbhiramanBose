@@ -2,7 +2,7 @@ name: update-readme-times
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -15,8 +15,14 @@ concurrency:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+
+      - name: Debug trigger info
+        run: |
+          echo "event=${{ github.event_name }}"
+          date -u
 
       - name: Update UTC/IST badges + stats refresh
         run: |
@@ -38,24 +44,9 @@ jobs:
           utc_img = f'<img src="https://img.shields.io/badge/UTC-{utc_badge}-black?style=plastic" alt="UTC Time" />'
           ist_img = f'<img src="https://img.shields.io/badge/IST-{ist_badge}-black?style=plastic" alt="IST Time" />'
 
-          text = re.sub(
-              r"(<!--UTC_BADGE_START-->)(.*?)(<!--UTC_BADGE_END-->)",
-              rf"\1\n  {utc_img}\n  \3",
-              text,
-              flags=re.S,
-          )
-          text = re.sub(
-              r"(<!--IST_BADGE_START-->)(.*?)(<!--IST_BADGE_END-->)",
-              rf"\1\n  {ist_img}\n  \3",
-              text,
-              flags=re.S,
-          )
-          text = re.sub(
-              r"<!--STATS_REFRESH-->.*?<!--/STATS_REFRESH-->",
-              f"<!--STATS_REFRESH-->{refresh}<!--/STATS_REFRESH-->",
-              text,
-              flags=re.S,
-          )
+          text = re.sub(r"(<!--UTC_BADGE_START-->)(.*?)(<!--UTC_BADGE_END-->)", rf"\1\n  {utc_img}\n  \3", text, flags=re.S)
+          text = re.sub(r"(<!--IST_BADGE_START-->)(.*?)(<!--IST_BADGE_END-->)", rf"\1\n  {ist_img}\n  \3", text, flags=re.S)
+          text = re.sub(r"<!--STATS_REFRESH-->.*?<!--/STATS_REFRESH-->", f"<!--STATS_REFRESH-->{refresh}<!--/STATS_REFRESH-->", text, flags=re.S)
 
           p.write_text(text, encoding="utf-8")
           PY
@@ -70,4 +61,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
           git commit -m "chore: update README UTC/IST badges and refresh time"
+          git pull --rebase
           git push
