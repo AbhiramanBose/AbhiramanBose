@@ -6,16 +6,19 @@
   meaningful applications.
 </p>
 
+
 ### 🕒 Live Time
 
 <p align="center">
-  <!--UTC_BADGE_START-->
-  <img src="https://img.shields.io/badge/UTC-2026--03--06_08--22--15_UTC-black?style=plastic" alt="UTC Time" />
-  <!--UTC_BADGE_END-->
+  <img
+    src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Ftimeapi.io%2Fapi%2FTime%2Fcurrent%2Fzone%3FtimeZone%3DUTC&query=%24.time&label=UTC&color=black&style=plastic&cacheSeconds=60"
+    alt="UTC Time"
+  />
   &nbsp;
-  <!--IST_BADGE_START-->
-  <img src="https://img.shields.io/badge/IST-2026--03--06_13--52--15_IST-black?style=plastic" alt="IST Time" />
-  <!--IST_BADGE_END-->
+  <img
+    src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Ftimeapi.io%2Fapi%2FTime%2Fcurrent%2Fzone%3FtimeZone%3DAsia%2FKolkata&query=%24.time&label=IST&color=black&style=plastic&cacheSeconds=60"
+    alt="IST Time"
+  />
 </p>
 
 ---
