@@ -1,0 +1,49 @@
+name: update-stats-refresh
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update stats refresh marker
+        run: |
+          python - <<'PY'
+          from datetime import datetime, timezone
+          from pathlib import Path
+          import re
+
+          p = Path("README.md")
+          text = p.read_text(encoding="utf-8")
+
+          stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          text = re.sub(
+              r"<!--STATS_REFRESH-->.*?<!--/STATS_REFRESH-->",
+              f"<!--STATS_REFRESH-->{stamp}<!--/STATS_REFRESH-->",
+              text,
+              flags=re.S
+          )
+
+          p.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Commit and push
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "chore: update stats refresh timestamp"
+          git pull --rebase
+          git push
