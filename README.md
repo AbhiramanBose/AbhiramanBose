@@ -1,4 +1,4 @@
-<h1 align="center">Hey 👋 I'm Abhiraman Bose</h1>
+<!-- <h1 align="center">Hey 👋 I'm Abhiraman Bose</h1>
 
 <p align="center">
   A passionate developer who loves building clean and efficient software.
@@ -55,7 +55,7 @@
 
 <p align="center">
 Last stats refresh: <!--STATS_REFRESH-->2026-03-09 07:08 UTC<!--/STATS_REFRESH-->
-</p>
+<!-- </p>
 
 ---
 
@@ -81,4 +81,4 @@ Last stats refresh: <!--STATS_REFRESH-->2026-03-09 07:08 UTC<!--/STATS_REFRESH--
 
 
 
-
+ --> -->
